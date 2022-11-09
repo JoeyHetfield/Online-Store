@@ -1,22 +1,15 @@
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
-import { getCategories, getProductsFromCategoryAndQuery } from './services/api';
+import Login from './components/Login';
 
-class App extends React.Component {
-  componentDidMount() {
-    getCategories();
-    getProductsFromCategoryAndQuery('MLB5672', 'acessorios');
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <h1>
-          Frontend Online Store
-        </h1>
-      </div>
-    );
-  }
+function App() {
+  return (
+    <div className="App">
+      <Switch>
+        <Route exact path="/" component={ Login } />
+      </Switch>
+    </div>
+  );
 }
-
 export default App;
