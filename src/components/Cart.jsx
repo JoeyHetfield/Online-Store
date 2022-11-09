@@ -4,8 +4,9 @@ import Botao from './Botao';
 class Cart extends Component {
   render() {
     return (
-      <div data-testid="home-initial-message">
-        Digite algum termo de pesquisa ou escolha uma categoria.
+      <div>
+        <h1 data-testid="shopping-cart-empty-message">Seu carrinho está vazio</h1>
+        <button type="button">botao</button>
         <Botao />
       </div>
     );
