@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import ProductsList from './ProductList';
 
-class Login extends Component {
+class Home extends Component {
   render() {
     return (
       <div data-testid="home-initial-message">
@@ -12,4 +12,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Home;
