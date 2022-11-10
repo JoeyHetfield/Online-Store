@@ -26,10 +26,8 @@ class Home extends Component {
   render() {
     const { inputValue, renderedList } = this.state;
     const listaDeProdutos = renderedList.map((product, index) => (
-      <li
-        key={ index }
-        data-testid="product"
-      >
+
+      <li key={ index } data-testid="product">
         {product.title}
         <img
           src={ product.thumbnail }
