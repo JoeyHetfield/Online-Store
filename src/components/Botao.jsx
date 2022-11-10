@@ -10,7 +10,7 @@ class Botao extends Component {
             data-testid="shopping-cart-button"
             type="button"
           >
-            Entrar!
+            Carrinho!
           </button>
         </Link>
       </div>
