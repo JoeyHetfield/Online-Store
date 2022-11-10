@@ -6,6 +6,7 @@ class ProductsList extends Component {
   state = {
     lista: [],
     listaProdutos: [],
+    carrinho: [],
   };
 
   async componentDidMount() {
@@ -18,6 +19,15 @@ class ProductsList extends Component {
     const list = await getProductsFromCategory(id);
     this.setState({
       listaProdutos: list.results,
+    });
+  };
+
+  addCart = (product) => {
+    this.setState((prevState) => ({
+      carrinho: [...prevState.carrinho, product],
+    }), () => {
+      const { carrinho } = this.state;
+      localStorage.setItem('items', JSON.stringify(carrinho));
     });
   };
 
@@ -37,6 +47,17 @@ class ProductsList extends Component {
           />
           {product.price}
         </Link>
+        <button
+          type="button"
+          data-testid="product-add-to-cart"
+          id={ product }
+          onClick={ () => this.addCart(product) }
+        >
+          {' '}
+          Adicionar ao carrinho
+          {' '}
+
+        </button>
       </li>
     ));
     return (
