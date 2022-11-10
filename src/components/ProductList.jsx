@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import { Link } from 'react-router-dom';
+import { getCategories, getProductsFromCategory } from '../services/api';
 
 class ProductsList extends Component {
   state = {
@@ -14,7 +15,7 @@ class ProductsList extends Component {
 
   handleChange = async (event) => {
     const { id } = event.target;
-    const list = await getProductsFromCategoryAndQuery(id);
+    const list = await getProductsFromCategory(id);
     this.setState({
       listaProdutos: list.results,
     });
@@ -27,12 +28,15 @@ class ProductsList extends Component {
         key={ index }
         data-testid="product"
       >
-        {product.title}
-        <img
-          src={ product.thumbnail }
-          alt={ product.title }
-        />
-        {product.price}
+        <Link data-testid="product-detail-link" to={ `/product/${product.id}` }>
+
+          {product.title}
+          <img
+            src={ product.thumbnail }
+            alt={ product.title }
+          />
+          {product.price}
+        </Link>
       </li>
     ));
     return (
