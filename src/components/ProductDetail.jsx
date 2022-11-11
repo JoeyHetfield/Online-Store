@@ -6,7 +6,10 @@ import Botao from './Botao';
 class ProductDetail extends Component {
   state = {
     produto: {},
-    // novoStorage: [],
+    email: '',
+    mensagem: '',
+    radio: '',
+    isValid: false,
   };
 
   async componentDidMount() {
@@ -15,16 +18,28 @@ class ProductDetail extends Component {
     this.setState({
       produto: productDetalhes,
     });
-    // const meuLocal = JSON.parse(localStorage.getItem('items'));
-    // this.setState({ novoStorage: meuLocal });
   }
 
   addCart = (product) => {
     localStorage.setItem('item', JSON.stringify(product));
   };
 
+  validForm = (event) => {
+    const { value, name } = event.target;
+    this.setState({
+      [name]: value,
+    }, () => {
+      const { email, mensagem, radio } = this.state;
+      const dOEmail = email.length > 0;
+      const doMensagem = mensagem.length > 0;
+      const doRadio = radio.length > 0;
+      const chefona = dOEmail && doMensagem && doRadio;
+      this.setState({ isValid: chefona });
+    });
+  };
+
   render() {
-    const { produto } = this.state;
+    const { produto, email, mensagem, isValid } = this.state;
     return (
       <div>
         <h1 data-testid="product-detail-name">
@@ -51,6 +66,87 @@ class ProductDetail extends Component {
           Adicionar ao carrinho
           {' '}
         </button>
+        <br />
+        {!isValid && <p data-testid="error-msg">Campos inválidos</p> }
+        <form action="">
+
+          <label htmlFor="email">
+
+            <input
+              onChange={ this.validForm }
+              name="email"
+              value={ email }
+              data-testid="product-detail-email"
+              id="email"
+              type="text"
+            />
+          </label>
+          <br />
+          <label htmlFor="radio">
+            <input
+              data-testid={ `${index}-rating` }
+              onChange={ this.validForm }
+              name="radio"
+              value="5"
+              type="radio"
+            />
+          </label>
+          <label htmlFor="radio">
+            <input
+              data-testid={ `${value}-rating` }
+              onChange={ this.validForm }
+              name="radio"
+              value="4"
+              type="radio"
+            />
+          </label>
+          <label htmlFor="radio">
+            <input
+              data-testid={ `${value}-rating` }
+              onChange={ this.validForm }
+              name="radio"
+              value="3"
+              type="radio"
+            />
+          </label>
+          <label htmlFor="radio">
+            <input
+              data-testid={ `${value}-rating` }
+              onChange={ this.validForm }
+              name="radio"
+              value="2"
+              type="radio"
+            />
+          </label>
+          <label htmlFor="radio">
+            <input
+              data-testid={ `${value}-rating` }
+              onChange={ this.validForm }
+              name="radio"
+              value="1"
+              type="radio"
+            />
+          </label>
+          <br />
+          <label htmlFor="mensagem">
+            <textarea
+              name="mensagem"
+              onChange={ this.validForm }
+              value={ mensagem }
+              data-testid="product-detail-evaluation"
+              placeholder="mensagem"
+              id="mensagem"
+            />
+          </label>
+          <button
+            data-testid="submit-review-btn"
+            type="button"
+          >
+            Enviar Formulario
+
+          </button>
+
+        </form>
 
       </div>
     );
