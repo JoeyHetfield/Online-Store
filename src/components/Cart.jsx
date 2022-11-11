@@ -7,9 +7,11 @@ class Cart extends Component {
 
   componentDidMount() {
     const localStoragee = JSON.parse(localStorage.getItem('items'));
-    this.setState({
-      cart: localStoragee,
-    });
+    if (localStoragee) {
+      this.setState({
+        cart: localStoragee,
+      });
+    }
   }
 
   render() {
@@ -21,15 +23,21 @@ class Cart extends Component {
         { item.price }
         <p data-testid="shopping-cart-product-quantity"> 1 </p>
       </li>
-      // ACERTAR QUANTIDADE DO P
+      // ACERTAR QUANTIDADE DOS ITENS NA TAG P
     ));
     return (
       <div>
-        <h1 data-testid="shopping-cart-empty-message">Seu carrinho está vazio</h1>
+        {
+          cart.length ? (
+            <ul>
+              { renderLocal }
+            </ul>
+          )
+            : (
+              <h1 data-testid="shopping-cart-empty-message">Seu carrinho está vazio</h1>
+            )
+        }
         <button type="button">botao</button>
-        <ul>
-          { renderLocal }
-        </ul>
       </div>
     );
   }
