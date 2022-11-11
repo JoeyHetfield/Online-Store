@@ -2,7 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getProductById } from '../services/api';
 import Botao from './Botao';
-//
+
 class ProductDetail extends Component {
   state = {
     produto: {},
@@ -39,7 +39,6 @@ class ProductDetail extends Component {
   };
 
   render() {
-    const { index } = this.props;
     const { produto, email, mensagem, isValid } = this.state;
     return (
       <div>
@@ -85,7 +84,7 @@ class ProductDetail extends Component {
           <br />
           <label htmlFor="radio">
             <input
-              data-testid="5-rating"
+              data-testid={ `${index}-rating` }
               onChange={ this.validForm }
               name="radio"
               value="5"
@@ -94,7 +93,7 @@ class ProductDetail extends Component {
           </label>
           <label htmlFor="radio">
             <input
-              data-testid="4-rating"
+              data-testid={ `${value}-rating` }
               onChange={ this.validForm }
               name="radio"
               value="4"
@@ -103,7 +102,7 @@ class ProductDetail extends Component {
           </label>
           <label htmlFor="radio">
             <input
-              data-testid="3-rating"
+              data-testid={ `${value}-rating` }
               onChange={ this.validForm }
               name="radio"
               value="3"
@@ -112,7 +111,7 @@ class ProductDetail extends Component {
           </label>
           <label htmlFor="radio">
             <input
-              data-testid="2-rating"
+              data-testid={ `${value}-rating` }
               onChange={ this.validForm }
               name="radio"
               value="2"
@@ -121,7 +120,7 @@ class ProductDetail extends Component {
           </label>
           <label htmlFor="radio">
             <input
-              data-testid="1-rating"
+              data-testid={ `${value}-rating` }
               onChange={ this.validForm }
               name="radio"
               value="1"
