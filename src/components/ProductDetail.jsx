@@ -6,6 +6,7 @@ import Botao from './Botao';
 class ProductDetail extends Component {
   state = {
     produto: {},
+    novoStorage: [],
   };
 
   async componentDidMount() {
@@ -14,8 +15,18 @@ class ProductDetail extends Component {
     this.setState({
       produto: productDetalhes,
     });
-    console.log(productDetalhes);
+    const meuLocal = JSON.parse(localStorage.getItem('items'));
+    this.setState({ novoStorage: meuLocal });
   }
+
+  addCart = (product) => {
+    this.setState((prevState) => ({
+      novoStorage: [...prevState.novoStorage, product],
+    }), () => {
+      const { novoStorage } = this.state;
+      localStorage.setItem('items', JSON.stringify(novoStorage));
+    });
+  };
 
   render() {
     const { produto } = this.state;
@@ -35,6 +46,17 @@ class ProductDetail extends Component {
           {' '}
         </p>
         <Botao />
+        <button
+          type="button"
+          data-testid="product-detail-add-to-cart"
+          id={ produto }
+          onClick={ () => this.addCart(produto) }
+        >
+          {' '}
+          Adicionar ao carrinho
+          {' '}
+        </button>
+
       </div>
     );
   }
