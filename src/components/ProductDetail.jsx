@@ -2,7 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getProductById } from '../services/api';
 import Botao from './Botao';
-
+//
 class ProductDetail extends Component {
   state = {
     produto: {},
