@@ -42,7 +42,7 @@ class Cart extends Component {
       </li>
       // ACERTAR QUANTIDADE DOS ITENS NA TAG P
     );
-    const verification = !cart.length && !cart2;
+    const verification = !cart.length && !cart2.title;
     return (
       <div>
         {
