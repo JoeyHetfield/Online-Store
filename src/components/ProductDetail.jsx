@@ -6,7 +6,7 @@ import Botao from './Botao';
 class ProductDetail extends Component {
   state = {
     produto: {},
-    novoStorage: [],
+    // novoStorage: [],
   };
 
   async componentDidMount() {
@@ -15,17 +15,12 @@ class ProductDetail extends Component {
     this.setState({
       produto: productDetalhes,
     });
-    const meuLocal = JSON.parse(localStorage.getItem('items'));
-    this.setState({ novoStorage: meuLocal });
+    // const meuLocal = JSON.parse(localStorage.getItem('items'));
+    // this.setState({ novoStorage: meuLocal });
   }
 
   addCart = (product) => {
-    this.setState((prevState) => ({
-      novoStorage: [...prevState.novoStorage, product],
-    }), () => {
-      const { novoStorage } = this.state;
-      localStorage.setItem('items', JSON.stringify(novoStorage));
-    });
+    localStorage.setItem('item', JSON.stringify(product));
   };
 
   render() {
