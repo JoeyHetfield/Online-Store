@@ -46,6 +46,8 @@ class ProductsList extends Component {
             alt={ product.title }
           />
           {product.price}
+          {product.shipping.free_shipping
+            ? <p data-testid="free-shipping"> Frete Grátis </p> : null}
         </Link>
         <button
           type="button"

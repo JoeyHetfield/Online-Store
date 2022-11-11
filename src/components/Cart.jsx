@@ -42,19 +42,30 @@ class Cart extends Component {
       </li>
       // ACERTAR QUANTIDADE DOS ITENS NA TAG P
     );
+    const verification = !cart.length && !cart2;
     return (
       <div>
         {
-          cart.length ? (
+          cart.length > 0 && (
             <ul>
               { renderLocal }
             </ul>
           )
-            : (
-              <h1 data-testid="shopping-cart-empty-message">Seu carrinho está vazio</h1>
-            )
+          //   : (
+          //     <h1 data-testid="shopping-cart-empty-message">Seu carrinho está vazio</h1>
+          //   )
         }
-        { renderLocal2 }
+        {
+          cart2.title && (
+            <ul>
+              { renderLocal2 }
+            </ul>
+          )
+        }
+        {
+          verification
+          && <h1 data-testid="shopping-cart-empty-message">Seu carrinho está vazio</h1>
+        }
         <button type="button">botao</button>
       </div>
     );
