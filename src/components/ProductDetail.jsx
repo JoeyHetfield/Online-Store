@@ -34,6 +34,13 @@ class ProductDetail extends Component {
       const doMensagem = mensagem.length > 0;
       const doRadio = radio.length > 0;
       const chefona = dOEmail && doMensagem && doRadio;
+      if (chefona) {
+        this.setState({
+          mensagem: '',
+          radio: '',
+          email: '',
+        });
+      }
       this.setState({ isValid: chefona });
     });
   };
@@ -84,34 +91,16 @@ class ProductDetail extends Component {
           <br />
           <label htmlFor="radio">
             <input
-              data-testid={ `${index}-rating` }
+              data-testid="1-rating"
               onChange={ this.validForm }
               name="radio"
-              value="5"
+              value="1"
               type="radio"
             />
           </label>
           <label htmlFor="radio">
             <input
-              data-testid={ `${value}-rating` }
-              onChange={ this.validForm }
-              name="radio"
-              value="4"
-              type="radio"
-            />
-          </label>
-          <label htmlFor="radio">
-            <input
-              data-testid={ `${value}-rating` }
-              onChange={ this.validForm }
-              name="radio"
-              value="3"
-              type="radio"
-            />
-          </label>
-          <label htmlFor="radio">
-            <input
-              data-testid={ `${value}-rating` }
+              data-testid="2-rating"
               onChange={ this.validForm }
               name="radio"
               value="2"
@@ -120,10 +109,28 @@ class ProductDetail extends Component {
           </label>
           <label htmlFor="radio">
             <input
-              data-testid={ `${value}-rating` }
+              data-testid="3-rating"
               onChange={ this.validForm }
               name="radio"
-              value="1"
+              value="3"
+              type="radio"
+            />
+          </label>
+          <label htmlFor="radio">
+            <input
+              data-testid="4-rating"
+              onChange={ this.validForm }
+              name="radio"
+              value="4"
+              type="radio"
+            />
+          </label>
+          <label htmlFor="radio">
+            <input
+              data-testid="5-rating"
+              onChange={ this.validForm }
+              name="radio"
+              value="5"
               type="radio"
             />
           </label>
