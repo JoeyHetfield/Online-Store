@@ -31,7 +31,7 @@ class Cart extends Component {
         { item.price }
         <p data-testid="shopping-cart-product-quantity"> 1 </p>
       </li>
-      // ACERTAR QUANTIDADE DOS ITENS NA TAG P
+      // ACERTAR QUANTIDADE DOS ITENS NA TAG P,
     ));
     const renderLocal2 = (
       <li data-testid="shopping-cart-product-name">
