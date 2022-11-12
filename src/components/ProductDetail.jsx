@@ -8,8 +8,10 @@ class ProductDetail extends Component {
     produto: {},
     email: '',
     mensagem: '',
-    radio: '',
+    rating: '',
     isValid: false,
+    idReviews: [],
+    invalidBtn: false,
   };
 
   async componentDidMount() {
@@ -18,7 +20,18 @@ class ProductDetail extends Component {
     this.setState({
       produto: productDetalhes,
     });
+    this.pullStorageReviews();
   }
+
+  pullStorageReviews = () => {
+    const { match: { params: { id } } } = this.props;
+    const idReview = JSON.parse(localStorage.getItem(id));
+    if (idReview) {
+      this.setState({ idReviews: idReview });
+    } else {
+      this.setState({ idReviews: [] });
+    }
+  };
 
   addCart = (product) => {
     localStorage.setItem('item', JSON.stringify(product));
@@ -29,24 +42,65 @@ class ProductDetail extends Component {
     this.setState({
       [name]: value,
     }, () => {
-      const { email, mensagem, radio } = this.state;
+      const { email, mensagem, rating } = this.state;
       const dOEmail = email.length > 0;
       const doMensagem = mensagem.length > 0;
-      const doRadio = radio.length > 0;
+      const doRadio = rating.length > 0;
       const chefona = dOEmail && doMensagem && doRadio;
       if (chefona) {
         this.setState({
-          mensagem: '',
-          radio: '',
-          email: '',
+          mensagem,
+          rating,
+          email,
         });
       }
       this.setState({ isValid: chefona });
     });
   };
 
+  sendForm = () => {
+    const { match: { params: { id } } } = this.props;
+    const { mensagem, rating, email, isValid } = this.state;
+    const review = {
+      email,
+      rating,
+      mensagem,
+    };
+
+    if (!isValid) {
+      this.setState({ invalidBtn: true });
+    }
+
+    if (isValid) {
+      const allStorageReview = JSON.parse(localStorage.getItem(id));
+      if (allStorageReview) {
+        const mergeStorage = [...allStorageReview, review];
+        localStorage.setItem(id, JSON.stringify(mergeStorage));
+      } else {
+        const emptyReview = [];
+        const mergeStorage2 = [...emptyReview, review];
+        localStorage.setItem(id, JSON.stringify(mergeStorage2));
+      }
+    }
+    this.setState({
+      mensagem: '',
+      rating: '',
+      email: '',
+    });
+    this.pullStorageReviews();
+  };
+
   render() {
-    const { produto, email, mensagem, isValid } = this.state;
+    const { produto, email, mensagem,
+      isValid, idReviews, rating, invalidBtn } = this.state;
+    const emptyState = !email && !mensagem && !rating;
+    const allIdReviews = idReviews.map((review, index) => (
+      <div data-testid="shopping-cart-product-name" key={ index }>
+        <p data-testid="review-card-email">{ review.email }</p>
+        <p data-testid="review-card-evaluation">{ review.mensagem }</p>
+        <p data-testid="review-card-rating">{ review.rating }</p>
+      </div>
+    ));
     return (
       <div>
         <h1 data-testid="product-detail-name">
@@ -74,7 +128,10 @@ class ProductDetail extends Component {
           {' '}
         </button>
         <br />
-        {!isValid && <p data-testid="error-msg">Campos inválidos</p> }
+        {/* { invalidBtn && <p data-testid="error-msg">Campos inválidos</p> } */}
+        {((!isValid && !emptyState) || invalidBtn)
+          && <p data-testid="error-msg">Campos inválidos</p> }
+        {/* {invalidBtn && <span data-testid="error-msg">Campos inválidos</span> } */}
         <form action="">
 
           <label htmlFor="email">
@@ -85,54 +142,66 @@ class ProductDetail extends Component {
               value={ email }
               data-testid="product-detail-email"
               id="email"
-              type="text"
+              type="email"
+              required
+              placeholder="email"
             />
           </label>
           <br />
-          <label htmlFor="radio">
+          <label htmlFor="1-rating">
             <input
               data-testid="1-rating"
+              id="1-rating"
               onChange={ this.validForm }
-              name="radio"
+              name="rating"
               value="1"
               type="radio"
             />
+            1
           </label>
-          <label htmlFor="radio">
+          <label htmlFor="2-rating">
             <input
               data-testid="2-rating"
+              id="2-rating"
               onChange={ this.validForm }
-              name="radio"
+              name="rating"
               value="2"
               type="radio"
             />
+            2
           </label>
-          <label htmlFor="radio">
+          <label htmlFor="3-rating">
             <input
               data-testid="3-rating"
+              id="3-rating"
               onChange={ this.validForm }
-              name="radio"
+              name="rating"
               value="3"
               type="radio"
             />
+            3
           </label>
-          <label htmlFor="radio">
+          <label htmlFor="4-rating">
             <input
               data-testid="4-rating"
+              id="4-rating"
               onChange={ this.validForm }
-              name="radio"
+              name="rating"
               value="4"
               type="radio"
             />
+            4
           </label>
-          <label htmlFor="radio">
+          <label htmlFor="5-rating">
             <input
               data-testid="5-rating"
+              id="5-rating"
               onChange={ this.validForm }
-              name="radio"
+              name="rating"
               value="5"
               type="radio"
             />
+            5
           </label>
           <br />
           <label htmlFor="mensagem">
@@ -148,13 +217,15 @@ class ProductDetail extends Component {
           <button
             data-testid="submit-review-btn"
             type="button"
+            onClick={ this.sendForm }
           >
             Enviar Formulario
 
           </button>
 
         </form>
-
+        <h3>Avaliações do produto:</h3>
+        { allIdReviews }
       </div>
     );
   }
